@@ -1,0 +1,1 @@
+Packer is a simplified implementation of a package manager.
