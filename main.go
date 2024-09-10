@@ -1,7 +1,7 @@
 package main
 
-import "fmt"
+import "ray-d-song.com/packer/server"
 
 func main() {
-	fmt.Println("packer")
+	server.SetupServer()
 }
