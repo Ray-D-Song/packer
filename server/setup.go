@@ -27,5 +27,6 @@ func SetupServer() {
 	api.Post("/auth/login", handler.UserLogin)
 	api.Post("/lib/check", handler.PreCheck)
 	api.Post("/lib/publish", handler.Publish)
+	api.Post("/lib/download", handler.LibDownload)
 	log.Fatal(app.Listen(":3000"))
 }

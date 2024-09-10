@@ -1,7 +1,9 @@
 package main
 
-import "ray-d-song.com/packer/server"
+import (
+	"ray-d-song.com/packer/cmd"
+)
 
 func main() {
-	server.SetupServer()
+	cmd.Execute()
 }
