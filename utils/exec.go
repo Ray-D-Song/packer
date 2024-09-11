@@ -11,7 +11,7 @@ import (
 	"ray-d-song.com/packer/lib"
 )
 
-func Execute() {
+func Execute(path string) {
 	tmpFile, err := os.CreateTemp("", "njs")
 	if err != nil {
 		fmt.Println("Error creating temp file:", err)
@@ -28,7 +28,7 @@ func Execute() {
 		return
 	}
 
-	cmd := exec.Command(tmpFile.Name(), "./log.js")
+	cmd := exec.Command(tmpFile.Name(), path)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
@@ -37,8 +37,5 @@ func Execute() {
 		return
 	}
 
-	if err := cmd.Wait(); err != nil {
-		fmt.Println("Error waiting for command to finish:", err)
-		return
-	}
+	cmd.Wait()
 }

@@ -44,11 +44,18 @@ It includes a command-line program for managing project libraries, as well as a 
 		}
 
 		if args[0] == "run" {
-			// if len(args) < 2 {
-			// 	fmt.Println("No script specified")
-			// 	return
-			// }
-			utils.Execute()
+			if len(args) < 2 {
+				fmt.Println("No script specified")
+				return
+			}
+			script := args[1]
+			scriptMap := viper.GetStringMapString("scripts")
+
+			if value, exists := scriptMap[script]; exists {
+				utils.Execute(value)
+			} else {
+				fmt.Println("Script does not exist")
+			}
 			return
 		}
 
