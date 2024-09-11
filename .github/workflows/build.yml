@@ -1,0 +1,42 @@
+name: Go Build and Publish
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: '1.17'
+
+    - name: Install dependencies
+      run: go mod tidy
+
+    - name: Build
+      run: GOOS=darwin GOARCH=arm64 go build -o pack ./...
+
+    - name: Upload Release Asset
+      uses: actions/upload-artifact@v2
+      with:
+        name: pack
+        path: pack
+
+    - name: Create Release
+      id: create_release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: pack
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
