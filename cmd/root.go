@@ -43,6 +43,15 @@ It includes a command-line program for managing project libraries, as well as a 
 			return
 		}
 
+		if args[0] == "run" {
+			// if len(args) < 2 {
+			// 	fmt.Println("No script specified")
+			// 	return
+			// }
+			utils.Execute()
+			return
+		}
+
 		cmd.Help()
 		os.Exit(0)
 	},
