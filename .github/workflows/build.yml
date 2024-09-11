@@ -31,7 +31,7 @@ jobs:
       run: GOOS=darwin GOARCH=arm64 go build -o pack
 
     - name: Upload Release Asset
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: pack
         path: pack
