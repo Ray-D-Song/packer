@@ -4,5 +4,5 @@ package lib
 
 import _ "embed"
 
-//go:embed qjs_darwin_aarch64
+//go:embed qjs_darwin
 var QjsEmbed []byte
