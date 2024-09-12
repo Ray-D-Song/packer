@@ -12,13 +12,13 @@ import (
 )
 
 func Execute(path string) {
-	tmpFile, err := os.CreateTemp("", "njs")
+	tmpFile, err := os.CreateTemp("", "jsr")
 	if err != nil {
 		fmt.Println("Error creating temp file:", err)
 		return
 	}
 	defer os.Remove(tmpFile.Name())
-	if _, err := io.Copy(tmpFile, bytes.NewReader(lib.QjsEmbed)); err != nil {
+	if _, err := io.Copy(tmpFile, bytes.NewReader(lib.JsrEmbed)); err != nil {
 		fmt.Println("Error writing to temp file:", err)
 		return
 	}
