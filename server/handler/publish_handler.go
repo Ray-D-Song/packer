@@ -6,6 +6,7 @@ import (
 	"path"
 
 	"github.com/gofiber/fiber/v2"
+	"ray-d-song.com/packer/dict"
 	"ray-d-song.com/packer/model"
 	"ray-d-song.com/packer/utils"
 )
@@ -59,7 +60,7 @@ func Publish(c *fiber.Ctx) error {
 		return c.JSON(utils.ResponseErr(500, "File upload failed, please try again later"))
 	}
 
-	destDir := path.Join(utils.StorageDir, name, version)
+	destDir := path.Join(dict.StorageDir, name, version)
 	err = utils.EnsureDirExists(destDir)
 	if err != nil {
 		return c.JSON(utils.ResponseErr(500, "Create directory failed"))

@@ -1,5 +1,4 @@
 name: Go Build and Publish
-
 on:
   push:
     branches:
@@ -7,14 +6,17 @@ on:
   pull_request:
     branches:
       - main
-
 permissions: 
   contents: write
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        go-version: [1.21]
+      
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -22,25 +24,43 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
-        go-version: '1.21'
+        go-version: ${{ matrix.go-version }}
 
     - name: Install dependencies
       run: go mod tidy
 
     - name: Build
-      run: GOOS=darwin GOARCH=arm64 go build -o pack
+      run: |
+        if [ "${{ matrix.os }}" == "windows-latest" ]; then
+          GOOS=windows GOARCH=amd64 go build -o pack.exe
+        elif [ "${{ matrix.os }}" == "darwin" ]; then
+          GOOS=darwin GOARCH=arm64 go build -o pack
+        else
+          GOOS=linux GOARCH=amd64 go build -o pack
+        fi
 
     - name: Upload Release Asset
       uses: actions/upload-artifact@v4
       with:
         name: pack
-        path: pack
+        path: |
+          pack
+          pack.exe
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
 
     - name: Create Release
       id: create_release
       uses: softprops/action-gh-release@v1
       with:
         tag_name: v0.1.1
-        files: pack
+        files: |
+          pack
+          pack.exe
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

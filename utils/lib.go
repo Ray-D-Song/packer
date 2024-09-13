@@ -2,20 +2,11 @@ package utils
 
 import (
 	"os"
-	"os/user"
 	"path"
 	"path/filepath"
+
+	"ray-d-song.com/packer/dict"
 )
-
-var StorageDir string
-
-func init() {
-	usr, err := user.Current()
-	if err != nil {
-		panic(err)
-	}
-	StorageDir = path.Join(usr.HomeDir, ".packer", "storage")
-}
 
 func CheckExists(path string) bool {
 	_, err := os.Stat(path)
@@ -23,13 +14,13 @@ func CheckExists(path string) bool {
 }
 
 func CheckLibExist(libName string) bool {
-	libPath := path.Join(StorageDir, libName)
+	libPath := path.Join(dict.StorageDir, libName)
 
 	return CheckExists(libPath)
 }
 
 func CheckLibVersionExist(libName string, version string) bool {
-	libPath := path.Join(StorageDir, libName, version)
+	libPath := path.Join(dict.StorageDir, libName, version)
 
 	return CheckExists(libPath)
 }

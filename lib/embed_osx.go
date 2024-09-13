@@ -4,5 +4,5 @@ package lib
 
 import _ "embed"
 
-//go:embed jsr_darwin
+//go:embed jsr.zip
 var JsrEmbed []byte

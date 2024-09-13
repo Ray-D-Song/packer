@@ -6,6 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"ray-d-song.com/packer/hooks"
 	"ray-d-song.com/packer/server"
 	"ray-d-song.com/packer/utils"
 )
@@ -16,6 +17,9 @@ var rootCmd = &cobra.Command{
 	Long: `Packer is a simplified implementation of a package manager.
 It includes a command-line program for managing project libraries, as well as a server program for managing repositories.`,
 	Run: func(cmd *cobra.Command, args []string) {
+
+		hooks.EveryStart()
+
 		if len(args) == 0 {
 			cmd.Help()
 			os.Exit(0)

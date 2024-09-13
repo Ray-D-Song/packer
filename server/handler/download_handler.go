@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
+	"ray-d-song.com/packer/dict"
 	"ray-d-song.com/packer/model"
 	"ray-d-song.com/packer/utils"
 )
@@ -22,7 +23,7 @@ func LibDownload(c *fiber.Ctx) error {
 			"message": "Library version not found",
 		})
 	}
-	depPath := path.Join(utils.StorageDir, dep.Name, dep.Version)
+	depPath := path.Join(dict.StorageDir, dep.Name, dep.Version)
 	zipData, err := zipFolder(depPath)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{

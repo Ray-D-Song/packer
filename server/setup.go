@@ -5,12 +5,13 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"ray-d-song.com/packer/dict"
 	"ray-d-song.com/packer/server/handler"
 	"ray-d-song.com/packer/utils"
 )
 
 func init() {
-	err := utils.EnsureDirExists(utils.StorageDir)
+	err := utils.EnsureDirExists(dict.StorageDir)
 	if err != nil {
 		panic(err)
 	}
