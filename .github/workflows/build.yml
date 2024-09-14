@@ -30,8 +30,8 @@ jobs:
     - name: Build
       run: |
         GOOS=darwin GOARCH=arm64 go build -o pack-darwin-aarch64 
-        && GOOS=windows GOARCH=amd64 go build -o pack-win-amd64.exe
-        && GOOS=linux GOARCH=amd64 go build -o pack-linux-amd64
+        GOOS=windows GOARCH=amd64 go build -o pack-win-amd64.exe
+        GOOS=linux GOARCH=amd64 go build -o pack-linux-amd64
 
     - name: Upload Release Asset
       uses: actions/upload-artifact@v4
