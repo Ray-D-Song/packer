@@ -7,7 +7,6 @@ import (
 	"io"
 	"net/http"
 	"os"
-	"path"
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
@@ -58,7 +57,7 @@ func Download(registry string, dep string) {
 		panic(fmt.Sprintf("Error downloading dependency: %s", response.Status))
 	}
 
-	depPath := path.Join(GetLibsPath(), dep)
+	depPath := GetLibsPath()
 	err = EnsureDirExists(depPath)
 	if err != nil {
 		panic(err)

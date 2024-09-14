@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"sync"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -41,9 +42,16 @@ It includes a command-line program for managing project libraries, as well as a 
 			diff := utils.DiffDeps(deps)
 
 			registry := viper.GetString("registry")
+			var wg sync.WaitGroup
 			for _, dep := range diff {
-				utils.Download(registry, dep)
+				wg.Add(1)
+				go func(dep string) {
+					utils.Download(registry, dep)
+				}(dep)
 			}
+
+			wg.Wait()
+			hooks.AfterSync()
 			return
 		}
 
@@ -61,6 +69,10 @@ It includes a command-line program for managing project libraries, as well as a 
 				fmt.Println("Script does not exist")
 			}
 			return
+		}
+
+		if args[0] == "publish" {
+
 		}
 
 		cmd.Help()

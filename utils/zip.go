@@ -2,15 +2,12 @@ package utils
 
 import (
 	"archive/zip"
-	"fmt"
 	"io"
 	"os"
 	"path/filepath"
 )
 
 func Unzip(src string, dest string) error {
-	fmt.Println(src)
-	fmt.Println(dest)
 	zipReader, err := zip.OpenReader(src)
 	if err != nil {
 		return err

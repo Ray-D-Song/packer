@@ -29,5 +29,5 @@ func SetupServer() {
 	api.Post("/lib/check", handler.PreCheck)
 	api.Post("/lib/publish", handler.Publish)
 	api.Post("/lib/download", handler.LibDownload)
-	log.Fatal(app.Listen(":3000"))
+	log.Fatal(app.Listen(":7749"))
 }
