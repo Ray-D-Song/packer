@@ -20,11 +20,17 @@ scripts:
 
 hooks:
   # Callback after executing pack sync
-  after_sync: 'pack_scripts/after_sync.mjs'
+  after_sync: './pack_scripts/after_sync.mjs'
+
+# Default is true, The source code will be saved in ~/.pack/libs
+# if you set it to false, the source code will be saved in the project directory
+symlink: false
 ```
 ## pack_libs
 The source code will be saved in `~/.pack/libs`.
 Create a `pack_libs` dir in the root directory of the project and symlink it to `~/.pack/libs`.
+
+You can also set `symlink` to `false` in `pack.yml` to disable symlink.
 
 ## bin
 
