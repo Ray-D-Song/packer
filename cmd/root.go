@@ -72,7 +72,8 @@ It includes a command-line program for managing project libraries, as well as a 
 		}
 
 		if args[0] == "publish" {
-
+			Publish()
+			return
 		}
 
 		cmd.Help()

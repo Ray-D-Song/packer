@@ -3,7 +3,7 @@ It includes a command-line program for managing project libraries, as well as a 
 
 ## pack.yml
 ```yml
-registry: 'http://127.0.0.1:3000'
+registry: 'http://127.0.0.1:7749'
 name: 'packer'
 version: 0.1.0
 

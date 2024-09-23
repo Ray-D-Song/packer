@@ -27,6 +27,11 @@ jobs:
     - name: Install dependencies
       run: go mod tidy
 
+    - name: Set ENV variable
+      env:
+        ENV: production
+      run: echo "ENV=production" >> $GITHUB_ENV
+
     - name: Build
       run: |
         GOOS=darwin GOARCH=arm64 go build -o pack-darwin-aarch64 
