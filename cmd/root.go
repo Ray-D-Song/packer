@@ -3,10 +3,13 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"sync"
 
+	"github.com/google/uuid"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"ray-d-song.com/packer/dict"
 	"ray-d-song.com/packer/hooks"
 	"ray-d-song.com/packer/server"
 	"ray-d-song.com/packer/utils"
@@ -24,6 +27,16 @@ It includes a command-line program for managing project libraries, as well as a 
 		if len(args) == 0 {
 			cmd.Help()
 			os.Exit(0)
+		}
+
+		permKeyPath := filepath.Join(dict.PackerDir, "perm.key")
+		if _, err := os.Stat(permKeyPath); os.IsNotExist(err) {
+			uuid := uuid.New().String()
+			err := os.WriteFile(permKeyPath, []byte(uuid), 0644)
+			if err != nil {
+				fmt.Println("Error creating perm.key file:", err)
+				os.Exit(1)
+			}
 		}
 
 		if args[0] == "server" {
@@ -46,11 +59,13 @@ It includes a command-line program for managing project libraries, as well as a 
 			for _, dep := range diff {
 				wg.Add(1)
 				go func(dep string) {
+					defer wg.Done()
 					utils.Download(registry, dep)
 				}(dep)
 			}
 
 			wg.Wait()
+			fmt.Println("Sync completed")
 			hooks.AfterSync()
 			return
 		}
