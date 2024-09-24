@@ -112,7 +112,6 @@ func Publish() {
 		log.Fatalf("Pre-check failed: %s", message)
 		return
 	}
-	fmt.Println(preCheckResult)
 	bodyField, ok := preCheckResult["data"]
 	if !ok || bodyField == nil {
 		log.Fatalf("Invalid pre-check response: missing body")

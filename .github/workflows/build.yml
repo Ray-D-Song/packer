@@ -34,9 +34,9 @@ jobs:
 
     - name: Build
       run: |
-        GOOS=darwin GOARCH=arm64 go build -o pack-darwin-aarch64 
-        GOOS=windows GOARCH=amd64 go build -o pack-win-amd64.exe
-        GOOS=linux GOARCH=amd64 go build -o pack-linux-amd64
+        GOOS=darwin GOARCH=arm64 go build -ldflags '-extldflags "-static"' -o pack-darwin-aarch64 
+        GOOS=windows GOARCH=amd64 go build -ldflags '-extldflags "-static"' -o pack-win-amd64.exe
+        GOOS=linux GOARCH=amd64 go build -ldflags '-extldflags "-static"' -o pack-linux-amd64
 
     - name: Upload Release Asset
       uses: actions/upload-artifact@v4
@@ -51,7 +51,7 @@ jobs:
       id: create_release
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: v0.1.6
+        tag_name: v0.1.7
         files: |
           pack-darwin-aarch64 
           pack-win-amd64.exe
