@@ -51,7 +51,7 @@ jobs:
       id: create_release
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: v0.1.7
+        tag_name: v0.1.8
         files: |
           pack-darwin-aarch64 
           pack-win-amd64.exe

@@ -19,18 +19,7 @@ func LoggerMiddleware() func(*fiber.Ctx) error {
 		var requestBody string
 
 		if strings.HasPrefix(contentType, "multipart/form-data") {
-			form, err := c.MultipartForm()
-			if err == nil {
-				var fileNames []string
-				for _, files := range form.File {
-					for _, file := range files {
-						fileNames = append(fileNames, file.Filename)
-					}
-				}
-				requestBody = "multipart/form-data: " + strings.Join(fileNames, ", ")
-			} else {
-				requestBody = "multipart/form-data: error parsing form"
-			}
+			requestBody = "multipart/form-data: [omitted]"
 		} else {
 			requestBody = string(body)
 		}
