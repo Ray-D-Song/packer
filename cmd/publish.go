@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/spf13/viper"
 	"ray-d-song.com/packer/dict"
@@ -36,6 +37,12 @@ func Publish() {
 			return err
 		}
 		if !info.IsDir() {
+			// Check if the path should be ignored
+			for _, ignore := range ignores {
+				if strings.Contains(path, ignore) {
+					return nil
+				}
+			}
 			files = append(files, path)
 		}
 		return nil
@@ -45,7 +52,7 @@ func Publish() {
 		return
 	}
 
-	// Filter out ignored files
+	// Filter out ignored files and directories
 	var filteredFiles []string
 	for _, file := range files {
 		ignore := false
