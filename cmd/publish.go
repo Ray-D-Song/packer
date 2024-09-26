@@ -36,13 +36,15 @@ func Publish() {
 		if err != nil {
 			return err
 		}
-		if !info.IsDir() {
-			// Check if the path should be ignored
-			for _, ignore := range ignores {
-				if strings.Contains(path, ignore) {
-					return nil
+		for _, ignore := range ignores {
+			if strings.Contains(path, ignore) {
+				if info.IsDir() {
+					return filepath.SkipDir
 				}
+				return nil
 			}
+		}
+		if !info.IsDir() {
 			files = append(files, path)
 		}
 		return nil
