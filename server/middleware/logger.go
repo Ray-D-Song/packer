@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"fmt"
 	"strings"
 	"time"
 
@@ -37,9 +38,17 @@ func LoggerMiddleware() func(*fiber.Ctx) error {
 			zap.String("query-params", queryParams),
 		)
 
-		utils.Logger.Info("Response",
-			zap.String("body", string(c.Response().Body())),
-		)
+		responseContentType := string(c.Response().Header.Peek("Content-Type"))
+		fmt.Println(responseContentType)
+		if strings.HasPrefix(responseContentType, "application/octet-stream") || strings.HasPrefix(responseContentType, "application/zip") || strings.HasPrefix(responseContentType, "text/plain") {
+			utils.Logger.Info("Response",
+				zap.String("body", "[omitted: file response]"),
+			)
+		} else {
+			utils.Logger.Info("Response",
+				zap.String("body", string(c.Response().Body())),
+			)
+		}
 
 		return err
 	}
