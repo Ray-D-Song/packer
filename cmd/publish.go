@@ -11,7 +11,6 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"strings"
 
 	"github.com/spf13/viper"
 	"ray-d-song.com/packer/dict"
@@ -36,8 +35,9 @@ func Publish() {
 		if err != nil {
 			return err
 		}
+		// Check if the path should be ignored
 		for _, ignore := range ignores {
-			if strings.Contains(path, ignore) {
+			if info.Name() == ignore {
 				if info.IsDir() {
 					return filepath.SkipDir
 				}
@@ -50,7 +50,7 @@ func Publish() {
 		return nil
 	})
 	if err != nil {
-		log.Fatalf("Failed to list files: %v", err)
+		log.Fatalf("Failed to walk through files: %v", err)
 		return
 	}
 
